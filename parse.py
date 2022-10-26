@@ -14,7 +14,7 @@ def tokenize(program: str) -> list[str]:
 
 
 def space_in_parens(line: str) -> str:
-    """ Pads space on the inside of opening and closing parens """
+    """ Pads space on the inside of opening and closing parens and quote """
     return line.replace("(", "( ").replace(")", " )")
 
 
@@ -45,3 +45,4 @@ def atom(token: str) -> Atom:
             return float(token)
         except ValueError:
             return Symbol(token)
+            

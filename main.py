@@ -5,7 +5,9 @@ from impl_types import Exp, List
 
 def repl(prompt="> "):
     while True:
-        val = eval(tokenize_parse(input(prompt)))
+        ast = tokenize_parse(input(prompt))
+        print(ast)
+        val = eval(ast)
         if val is not None:
             print(format_value(val))
 

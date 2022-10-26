@@ -9,7 +9,7 @@ quote notation
 
 derived expression types:
 * cond
-* let
+* ~~let~~
 
 strings
 booleans
