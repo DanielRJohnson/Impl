@@ -1,8 +1,6 @@
 import math
 import operator as op
-from typing import TypeVar
-EnvType = TypeVar("Env")
-
+from typing import Self
 
 class Env(dict):
     """ Env is a chained dictionary representing nested scopes """
@@ -11,7 +9,7 @@ class Env(dict):
         self.update(zip(keys, values))
         self.outer = outer
 
-    def find(self, var: str) -> EnvType:
+    def find(self, var: str) -> Self:
         """
         Traverse out in scopes until the var is found.
         Then, return that Env.
