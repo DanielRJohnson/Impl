@@ -1,4 +1,5 @@
 from impl_types import Atom, Exp, Symbol
+import re
 
 
 def tokenize_parse(program: str) -> Exp:
@@ -8,6 +9,7 @@ def tokenize_parse(program: str) -> Exp:
 
 def tokenize(program: str) -> list[str]:
     """ Tokenizes the input by splitting on whitespace """
+    program = re.sub(";;.*\n", "", program+"\n") # comments with ;;
     return space_in_parens(program).split()
 
 
