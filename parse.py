@@ -15,7 +15,7 @@ def tokenize(program: str) -> list[str]:
 
 def space_in_parens(line: str) -> str:
     """ Pads space on the inside of opening and closing parens and quote """
-    return line.replace("(", "( ").replace(")", " )")
+    return line.replace("(", "( ").replace(")", " )").replace("\'", "\' ")
 
 
 def parse(tokens: list[str]) -> Exp:
@@ -24,11 +24,18 @@ def parse(tokens: list[str]) -> Exp:
         raise SyntaxError("unexpected EOI")
     token = tokens.pop(0)
     if token == "(":
-        sexp = []
+        sexp = []         
         while (tokens[0] != ")"):
             sexp.append(parse(tokens))
         tokens.pop(0)  # pop ")"
         return sexp
+    elif token == "'": # '(1 2 3) => ["'", [1, 2, 3]]
+        items = []
+        tokens.pop(0)
+        while (tokens[0] != ")"):
+            items.append(parse(tokens))
+        tokens.pop(0) # pop ")"
+        return ["'", items]
     elif token == ")":
         raise SyntaxError("unexpected )")
     else:

@@ -10,7 +10,7 @@ def eval(x: Exp, env=StandardEnv()) -> Exp:
         return x
 
     op, *args = x
-    if op == "quote":
+    if op == "quote" or op == "'":
         return args[0]
     elif op == "if":
         (cond, tbranch, fbranch) = args

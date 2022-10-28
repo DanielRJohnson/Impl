@@ -5,7 +5,7 @@
 
 ~~comments~~
 
-quote notation
+~~quote notation~~
 
 derived expression types:
 * cond
