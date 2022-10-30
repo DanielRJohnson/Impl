@@ -15,7 +15,9 @@ derived expression types:
 
 ~~booleans~~
 
-loop structure
+":" literals
+
+~~loop structure~~
 
 ~~sufficient error detection, not ground-breaking. just a toy language~~
 

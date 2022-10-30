@@ -51,6 +51,16 @@ def eval(x: Exp, env=StandardEnv()) -> Exp:
             ), "let's formals must be symbols"
         desugar = [["lambda", formals, args[1]], *actuals]
         return eval(desugar, env)
+    elif op == "for":
+        assert len(args) == 3, "for must have three arguments"
+        (sym, collection, body) = args
+        assert isinstance(sym, str) and sym.is_symbol(
+        ), "for's first argument must be a symbol"
+        coll = eval(collection, env)
+        for item in coll:
+            env[sym] = item
+            eval(body, env)
+
     else:  # procedure call
         proc = eval(op, env)
         args = [eval(arg, env) for arg in args]
