@@ -15,7 +15,7 @@ derived expression types:
 
 ~~booleans~~
 
-":" literals
+~~":" literals~~
 
 ~~loop structure~~
 

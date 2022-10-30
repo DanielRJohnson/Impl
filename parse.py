@@ -1,4 +1,4 @@
-from impl_types import Atom, Exp, Symbol, String, Boolean
+from impl_types import Atom, Exp, Symbol, String, Keyword, Boolean
 import re
 
 
@@ -69,6 +69,8 @@ def atom(token: str) -> Atom:
 
     if token[0] == "\"" and token[-1] == "\"":
         return String(token[1:-1])  # chop off quotes
+    elif token[0] == ":":
+        return Keyword(token)
     elif token == "True":
         return Boolean(True)
     elif token == "False":

@@ -16,6 +16,11 @@ class Symbol(str):
         return True
 
 
+class Keyword(str):
+    def is_symbol(self):
+        return False
+
+
 Atom = (Number, Symbol)
 Exp = (Atom, List)
 
