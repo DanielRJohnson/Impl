@@ -38,13 +38,13 @@ def parse(tokens: list[str]) -> Exp:
             sexp.append(parse(tokens))
         tokens.pop(0)  # pop ")"
         return sexp
-    elif token == "'":  # '(1 2 3) => ["'", [1, 2, 3]]
+    elif token == "'":  # '(1 2 3) => ["quote", [1, 2, 3]]
         items = []
         tokens.pop(0)
         while (tokens[0] != ")"):
             items.append(parse(tokens))
         tokens.pop(0)  # pop ")"
-        return ["'", items]
+        return ["quote", items]
     elif token == ")":
         raise SyntaxError("unexpected )")
     else:
