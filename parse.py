@@ -1,4 +1,4 @@
-from impl_types import Atom, Exp, Symbol
+from impl_types import Atom, Exp, Symbol, String, Boolean
 import re
 
 
@@ -9,13 +9,22 @@ def tokenize_parse(program: str) -> Exp:
 
 def tokenize(program: str) -> list[str]:
     """ Tokenizes the input by splitting on whitespace """
-    program = re.sub(";;.*\n", "", program+"\n") # comments with ;;
-    return space_in_parens(program).split()
+    program = re.sub(";;.*\n", "", program+"\n")  # comments with ;;
+    program = space_in_parens(program)
+    # split on whitespace or string literal
+    tokens = re.split("(\s|\"[^\"]*\")", program)
+    tokens = filter_whitespace(tokens)
+    return tokens
 
 
-def space_in_parens(line: str) -> str:
+def space_in_parens(program: str) -> str:
     """ Pads space on the inside of opening and closing parens and quote """
-    return line.replace("(", "( ").replace(")", " )").replace("\'", "\' ")
+    return program.replace("(", "( ").replace(")", " )").replace("\'", "\' ")
+
+
+def filter_whitespace(tokens: list[str]) -> list[str]:
+    """ Removes elements from a string list that only contain whitespace """
+    return [token for token in tokens if token.strip() != ""]
 
 
 def parse(tokens: list[str]) -> Exp:
@@ -24,17 +33,17 @@ def parse(tokens: list[str]) -> Exp:
         raise SyntaxError("unexpected EOI")
     token = tokens.pop(0)
     if token == "(":
-        sexp = []         
+        sexp = []
         while (tokens[0] != ")"):
             sexp.append(parse(tokens))
         tokens.pop(0)  # pop ")"
         return sexp
-    elif token == "'": # '(1 2 3) => ["'", [1, 2, 3]]
+    elif token == "'":  # '(1 2 3) => ["'", [1, 2, 3]]
         items = []
         tokens.pop(0)
         while (tokens[0] != ")"):
             items.append(parse(tokens))
-        tokens.pop(0) # pop ")"
+        tokens.pop(0)  # pop ")"
         return ["'", items]
     elif token == ")":
         raise SyntaxError("unexpected )")
@@ -44,12 +53,19 @@ def parse(tokens: list[str]) -> Exp:
 
 def atom(token: str) -> Atom:
     """ Converts a token to its Atomic representation """
-    # todo, add other concrete types?
     try:
         return int(token)
     except ValueError:
         try:
             return float(token)
         except ValueError:
-            return Symbol(token)
-            
+            pass
+
+    if token[0] == "\"" and token[-1] == "\"":
+        return String(token[1:-1])  # chop off quotes
+    elif token == "True":
+        return Boolean(True)
+    elif token == "False":
+        return Boolean(False)
+    else:
+        return Symbol(token)

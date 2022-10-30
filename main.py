@@ -3,18 +3,30 @@ from parse import tokenize, parse
 from impl_types import Exp, List
 
 import cmd
+import sys
+
 
 class ReplParser(cmd.Cmd):
     prompt = '> '
+
     def default(self, line):
+        if line == "":
+            return
+        if line == "EOF":
+            sys.exit(0)
+
         tokens = tokenize(line)
         print("Tokens:", tokens)
         ast = parse(tokens)
         print("Ast:", ast)
-        val = eval(ast)
+        try:
+            val = eval(ast)
+        except Exception as e:
+            print(e)
+            return
         if val is not None:
             print(format_value(val))
-            
+
 
 def format_value(val: Exp) -> str:
     if isinstance(val, List):

@@ -1,8 +1,21 @@
 from dataclasses import dataclass
 from env import Env
-Symbol = str
 List = list
 Number = (int, float)
+String = str
+Boolean = bool
+
+
+class String(str):
+    def is_symbol(self):
+        return False
+
+
+class Symbol(str):
+    def is_symbol(self):
+        return True
+
+
 Atom = (Number, Symbol)
 Exp = (Atom, List)
 

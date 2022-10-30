@@ -8,11 +8,12 @@
 ~~quote notation~~
 
 derived expression types:
-* cond
+* cond?
 * ~~let~~
 
-strings
-booleans
+~~strings~~
+
+~~booleans~~
 
 loop structure
 
