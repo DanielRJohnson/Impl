@@ -19,11 +19,7 @@ class ReplParser(cmd.Cmd):
         print("Tokens:", tokens)
         ast = parse(tokens)
         print("Ast:", ast)
-        try:
-            val = eval(ast)
-        except Exception as e:
-            print(e)
-            return
+        val = eval(ast)
         if val is not None:
             print(format_value(val))
 

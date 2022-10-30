@@ -34,16 +34,22 @@ def parse(tokens: list[str]) -> Exp:
     token = tokens.pop(0)
     if token == "(":
         sexp = []
-        while (tokens[0] != ")"):
+        while len(tokens) != 0 and tokens[0] != ")":
             sexp.append(parse(tokens))
-        tokens.pop(0)  # pop ")"
+        try:
+            tokens.pop(0)  # pop ")"
+        except IndexError:
+            raise SyntaxError("expected )")
         return sexp
     elif token == "'":  # '(1 2 3) => ["quote", [1, 2, 3]]
         items = []
         tokens.pop(0)
-        while (tokens[0] != ")"):
+        while len(tokens) != 0 and tokens[0] != ")":
             items.append(parse(tokens))
-        tokens.pop(0)  # pop ")"
+        try:
+            tokens.pop(0)  # pop ")"
+        except IndexError:
+            raise SyntaxError("expected )")
         return ["quote", items]
     elif token == ")":
         raise SyntaxError("unexpected )")

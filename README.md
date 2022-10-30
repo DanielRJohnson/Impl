@@ -17,7 +17,7 @@ derived expression types:
 
 loop structure
 
-sufficient error detection, not ground-breaking. just a toy language
+~~sufficient error detection, not ground-breaking. just a toy language~~
 
 Actual image stuff lmao:
 * Position type
