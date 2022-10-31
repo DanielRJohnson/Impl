@@ -7,13 +7,15 @@ def tokenize_parse(program: str) -> Exp:
     return parse(tokenize(program))
 
 
-def tokenize(program: str) -> list[str]:
+def tokenize(program: str, is_multiexpr: bool) -> list[str]:
     """ Tokenizes the input by splitting on whitespace """
     program = re.sub(";;.*\n", "", program+"\n")  # comments with ;;
     program = space_in_parens(program)
     # split on whitespace or string literal
     tokens = re.split("(\s|\"[^\"]*\")", program)
     tokens = filter_whitespace(tokens)
+    if is_multiexpr:
+        tokens = ["(", "do"] + tokens + [")"]  # allow multiple expressions
     return tokens
 
 

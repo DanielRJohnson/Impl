@@ -14,7 +14,7 @@ class ReplParser(cmd.Cmd):
         if line == "EOF":
             sys.exit(0)
 
-        tokens = tokenize(line)
+        tokens = tokenize(line, is_multiexpr=False)
         print("Tokens:", tokens)
         ast = parse(tokens)
         print("Ast:", ast)

@@ -11,7 +11,7 @@ if __name__ == "__main__":
         try:
             with open(sys.argv[1], "r") as f:
                 prog_str = str(f.read())
-                eval(parse(tokenize(prog_str)))
+                eval(parse(tokenize(prog_str, is_multiexpr=True)))
         except FileNotFoundError:
             print("Input file could not be found")
     else:
