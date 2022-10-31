@@ -1,9 +1,8 @@
+import cmd
+import sys
 from eval import eval
 from parse import tokenize, parse
 from impl_types import Exp, List
-
-import cmd
-import sys
 
 
 class ReplParser(cmd.Cmd):
@@ -29,7 +28,3 @@ def format_value(val: Exp) -> str:
         return "(" + " ".join(map(format_value, val)) + ")"
     else:
         return str(val)
-
-
-if __name__ == "__main__":
-    ReplParser().cmdloop()

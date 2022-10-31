@@ -52,8 +52,9 @@ def eval(x: Exp, env=StandardEnv()) -> Exp:
         desugar = [["lambda", formals, args[1]], *actuals]
         return eval(desugar, env)
     elif op == "for":
-        assert len(args) == 3, "for must have three arguments"
-        (sym, collection, body) = args
+        assert len(args) == 4, "for must have four arguments"
+        (sym, keyw, collection, body) = args
+        assert keyw == ":in", "for's second argument must be :in"
         assert isinstance(sym, str) and sym.is_symbol(
         ), "for's first argument must be a symbol"
         coll = eval(collection, env)

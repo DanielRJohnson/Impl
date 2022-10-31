@@ -2,6 +2,7 @@ import math
 import operator as op
 from typing import Self
 
+
 class Env(dict):
     """ Env is a chained dictionary representing nested scopes """
 
@@ -52,4 +53,5 @@ class StandardEnv(Env):
             'procedure?': callable,
             'round': round,
             'symbol?': lambda x: isinstance(x, Symbol),
+            'range': lambda *args: list(range(*args)),
         })
