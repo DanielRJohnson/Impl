@@ -33,6 +33,15 @@ def eval(x: Exp, env=StandardEnv()) -> Exp:
         assert isinstance(sym, str) and sym.is_symbol(
         ), "set!'s first argument must be a symbol"
         env.find(sym)[sym] = eval(exp, env)
+    elif op == "list-set!":
+        assert len(args) == 3, "list-set! must have three arguments"
+        (lis, idx, val) = args
+        lis = eval(lis, env)
+        assert isinstance(
+            lis, list), "list-set!'s first argument must be a list'"
+        idx = eval(idx, env)
+        val = eval(val, env)
+        lis[idx] = val
     elif op == "lambda":
         assert len(args) == 2, "lambda must have two arguments"
         (formals, body) = args
