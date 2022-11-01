@@ -1,12 +1,13 @@
-(startfigure 256 256)
+(define DIM 512)
+(startfigure DIM DIM)
 
 ;; CREATE MOCK DATASET
-(define xs (range 30 226))
-(define ys (map (lambda (x) (+ x (randint -30 30))) xs))
+(define xs (range 100 (- DIM 100)))
+(define ys (map (lambda (x) (+ x (randint -100 100))) xs))
 
 ;; VISUALIZE DATA
 (for i :in (range (length xs))
-	(setpixel (list (nth i xs) (- 255 (nth i ys))) :to '(255 0 0))
+	(setpixel (list (nth i xs) (- (- DIM 1) (nth i ys))) :to '(255 0 0))
 )
 
 ;; DEFINE COST FUNCTION
@@ -40,7 +41,7 @@
 
 ;; INITIALIZE HYPERPARAMS
 (define theta 0)
-(define n_iter 500)
+(define n_iter 100)
 (define alpha 0.0001)
 (define theta_hist (list theta)) ;; Keep track of thetas
 
@@ -57,11 +58,11 @@
 (print "Plotting...")
 (for theta :in theta_hist 
 	(do
-		(define xs (range 256))
+		(define xs (range DIM))
 		(define ys (map (lambda (x) (round (* x theta))) xs))
-		(set! ys (map (lambda (y) (if (> y 255) 255 y)) ys)) ;; keep in range
+		(set! ys (map (lambda (y) (if (> y (- DIM 1)) (- DIM 1) y)) ys)) ;; keep in range
 		(for i :in (range (length xs))
-			(setpixel (list (nth i xs) (- 255 (nth i ys))) :to '(0 0 255))
+			(setpixel (list (nth i xs) (- (- DIM 1) (nth i ys))) :to '(0 0 255))
 		)
 		(snap!)
 	)

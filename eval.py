@@ -65,7 +65,7 @@ def eval(x: Exp, env=StandardEnv()) -> Exp:
     # image-related keywords
     elif op == "startfigure":
         assert len(args) == 2, "startfigure must have two arguments"
-        env.newfig(args)
+        env.newfig([eval(arg, env) for arg in args])
     elif op == "setpixel":
         assert len(args) == 3, "setpixel must have three arguments"
         (pos, keyw, col) = args
@@ -102,7 +102,7 @@ def eval(x: Exp, env=StandardEnv()) -> Exp:
 
     elif op == "save":
         assert len(args) in [1, 2], "save must have one or two arguments"
-        env.savefigs(*args)
+        env.savefigs(*[eval(arg, env) for arg in args])
 
     else:  # procedure call
         proc = eval(op, env)
