@@ -63,6 +63,8 @@ class StandardEnv(Env):
         self.update({  # set of standard procedures
             '+': op.add, '-': op.sub, '*': op.mul, '/': op.truediv,
             '>': op.gt, '<': op.lt, '>=': op.ge, '<=': op.le, '=': op.eq,
+            'and': op.and_,
+            'or': op.or_,
             'abs': abs,
             'append': op.add,
             'apply': lambda proc, args: proc(*args),
@@ -89,4 +91,5 @@ class StandardEnv(Env):
             'symbol?': lambda x: isinstance(x, Symbol),
             'range': lambda *args: list(range(*args)),
             'nth': lambda n, l: l[n],
+            'in': lambda l, v: l in v,
         })
