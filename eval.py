@@ -62,6 +62,48 @@ def eval(x: Exp, env=StandardEnv()) -> Exp:
             env[sym] = item
             eval(body, env)
 
+    # image-related keywords
+    elif op == "startfigure":
+        assert len(args) == 2, "startfigure must have two arguments"
+        env.newfig(args)
+    elif op == "setpixel":
+        assert len(args) == 3, "setpixel must have three arguments"
+        (pos, keyw, col) = args
+        assert keyw == ":to", "setpixel's second argument must be :to"
+        pos = eval(pos, env)
+        assert isinstance(pos, list) and len(
+            pos) == 2, "positions must be length two lists"
+        col = eval(col, env)
+        assert isinstance(col, list) and len(
+            col) == 3, "colors must be length three lists"
+        env.headfig()[pos[0], pos[1]] = tuple(col)
+    elif op == "setline":
+        assert len(args) == 3, "setline must have three arguments"
+        (keyw, line_idx, col) = args
+        assert keyw in [
+            ":x", ":y"], "setline's first argument must be :x or :y"
+        line_idx = eval(line_idx, env)
+        assert isinstance(line_idx, int), "line index must be int"
+        col = eval(col, env)
+        assert isinstance(col, list) and len(
+            col) == 3, "colors must be length three lists"
+
+        img = env.headfig()
+        if keyw == ":x":
+            for i in range(env.imgwidth()):
+                img[line_idx, i] = tuple(col)
+        else:  # ":y"
+            for i in range(env.imgheight()):
+                img[i, line_idx] = tuple(col)
+
+    elif op == "snap!":
+        assert len(args) == 0, "snap! must does not take any arguments"
+        env.newfig()
+
+    elif op == "save":
+        assert len(args) in [1, 2], "save must have one or two arguments"
+        env.savefigs(*args)
+
     else:  # procedure call
         proc = eval(op, env)
         args = [eval(arg, env) for arg in args]

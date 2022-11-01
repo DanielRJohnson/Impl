@@ -1,6 +1,7 @@
 import math
 import operator as op
 from typing import Self
+from PIL import Image
 
 
 class Env(dict):
@@ -9,6 +10,8 @@ class Env(dict):
     def __init__(self, keys=(), values=(), outer=None) -> None:
         self.update(zip(keys, values))
         self.outer = outer
+        self.images = []
+        self.figures = []
 
     def find(self, var: str) -> Self:
         """
@@ -16,6 +19,35 @@ class Env(dict):
         Then, return that Env.
         """
         return self if var in self else self.outer.find(var)
+
+    def headfig(self) -> Image:
+        assert len(self.images) > 0, "no figures exist"
+        return self.figures[0]
+
+    def newfig(self, figsize=None) -> None:
+        if len(self.images) == 0:
+            assert figsize != None, "figsize must be set if creating new figure"
+            self.images.append(Image.new("RGB", figsize, (0, 0, 0, 255)))
+        else:
+            self.images.insert(0, self.images[0].copy())
+        self.figures.insert(0, self.images[0].load())
+
+    def savefigs(self, fn: str, dur=10) -> None:
+        assert len(self.images) > 0, "no figures exist"
+        if len(self.images) == 1:
+            self.images[0].save(fn)
+        else:
+            chron_order = self.images[::-1]
+            chron_order[0].save(fn, save_all=True, append_images=chron_order[1:],
+                                optimize=False, duration=dur)
+
+    def imgwidth(self) -> int:
+        assert len(self.images) > 0, "no figures exist"
+        return self.images[0].width
+
+    def imgheight(self) -> int:
+        assert len(self.images) > 0, "no figures exist"
+        return self.images[0].height
 
 
 class StandardEnv(Env):
