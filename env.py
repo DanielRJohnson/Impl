@@ -1,4 +1,5 @@
 import math
+import random
 import operator as op
 from typing import Self
 from PIL import Image
@@ -39,7 +40,7 @@ class Env(dict):
         else:
             chron_order = self.images[::-1]
             chron_order[0].save(fn, save_all=True, append_images=chron_order[1:],
-                                optimize=False, duration=dur)
+                                optimize=False, duration=dur, loop=True)
 
     def imgwidth(self) -> int:
         assert len(self.images) > 0, "no figures exist"
@@ -58,6 +59,7 @@ class StandardEnv(Env):
         from impl_types import List, Symbol, Number
         super().__init__(keys, values, outer)
         self.update(vars(math))  # use math vars like pi, cos, sqrt, etc
+        self.update(vars(random))  # use random vars like uniform, randint, etc
         self.update({  # set of standard procedures
             '+': op.add, '-': op.sub, '*': op.mul, '/': op.truediv,
             '>': op.gt, '<': op.lt, '>=': op.ge, '<=': op.le, '=': op.eq,
@@ -86,4 +88,5 @@ class StandardEnv(Env):
             'round': round,
             'symbol?': lambda x: isinstance(x, Symbol),
             'range': lambda *args: list(range(*args)),
+            'nth': lambda n, l: l[n],
         })
