@@ -11,8 +11,8 @@ class Env(dict):
     def __init__(self, keys=(), values=(), outer=None) -> None:
         self.update(zip(keys, values))
         self.outer = outer
-        self.images = []
-        self.figures = []
+        self.images = [] if outer is None else outer.images
+        self.figures = [] if outer is None else outer.figures
 
     def find(self, var: str) -> Self:
         """
