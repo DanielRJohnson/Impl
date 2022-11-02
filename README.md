@@ -1,33 +1,35 @@
-# Impl
-(WIP) A cute little LISP dialect geared towards generating images
+# Impl (Image Programming Language)
+A cute but powerful little [LISP](https://en.wikipedia.org/wiki/Lisp_(programming_language)) dialect geared towards generating images.
 
-# TODO
+## Inspiration
+Inspired by [Norvig's lis.py](https://norvig.com/lispy.html), Impl started as a subset of [Scheme](https://www.scheme.org/), but diverged because I had an idea to make a language that produces images from language features. 
 
-~~comments~~
+## What can it do? 
+Impl has a good size [set of standard procedures](https://github.com/DanielRJohnson/Impl/blob/main/env.py) and [keywords](https://github.com/DanielRJohnson/Impl/blob/main/eval.py).
 
-~~quote notation~~
+Impl supports:
+ * List, Int, Float, String, and Boolean operations borrowing from Python's semantics
+ * User-defined variables and first-class procedures with lexical scope
+ * If-else conditionals
+ * Ease of use language features like `let`, `for`, and `' quoting`
+ * "keywords" like `:x`, inspired by [Clojure](https://clojure.org/)
+ * etc.
 
-derived expression types:
-* cond?
-* ~~let~~
+## Examples
+Examples can be found in [_examples/](https://github.com/DanielRJohnson/Impl/tree/main/_examples), but here are a couple of things I generated using Impl.
 
-~~strings~~
+#### [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
-~~booleans~~
+##### [Gosper Glider Gun](https://conwaylife.com/wiki/Gosper_glider_gun)
+<img src="https://github.com/DanielRJohnson/Impl/blob/main/_examples/conway/conway.gif" width="400" height="400" />
 
-~~":" literals~~
+##### Random starting point with cell alive probability of 15%
+<img src="https://github.com/DanielRJohnson/Impl/blob/main/_examples/conway/randomlife.gif" width="400" height="400" />
 
-~~loop structure~~
+#### [Linear Regression](https://en.wikipedia.org/wiki/Linear_regression) Fitting
+<img src="https://github.com/DanielRJohnson/Impl/blob/main/_examples/linear_regression/linreg.gif" width="400" height="400" />
 
-~~sufficient error detection, not ground-breaking. just a toy language~~
+## Usage
+`python <path to impl.py> <source file name?>`
 
-Actual image stuff lmao:
-* Position type
-* Color type
-* builtin procedures to generate images/animations:
-  * setpixel
-  * snap!
-  * etc.
-
-macros?
-https://stackoverflow.com/questions/3465868/how-to-implement-a-lisp-macro-system
+Running Impl without any arguments results in the REPL, which can evaluate expressions but is not meant for generating images. Running Impl with one filename argument executes the given file.
