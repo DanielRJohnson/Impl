@@ -40,7 +40,7 @@ class Env(dict):
         else:
             chron_order = self.images[::-1]
             chron_order[0].save(fn, save_all=True, append_images=chron_order[1:],
-                                optimize=False, duration=dur, loop=True)
+                                optimize=False, duration=dur, loop=0)
 
     def imgwidth(self) -> int:
         assert len(self.images) > 0, "no figures exist"
