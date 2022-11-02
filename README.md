@@ -16,7 +16,7 @@ Impl supports:
  * etc.
 
 ## Examples
-Examples can be found in [_examples/](https://github.com/DanielRJohnson/Impl/tree/main/_examples), but here are a couple of things I generated using Impl.
+Examples can be found in [_examples/](https://github.com/DanielRJohnson/Impl/tree/main/_examples), but here are a couple of animations I generated using Impl.
 
 #### [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
